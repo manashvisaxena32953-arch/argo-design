@@ -10,33 +10,102 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as HistoryRouteImport } from './routes/history'
+import { Route as AttemptsAttemptIdRouteImport } from './routes/attempts.$attemptId'
+import { Route as PracticeAttemptIdRouteImport } from './routes/practice.$attemptId'
+import { Route as ProblemsIndexRouteImport } from './routes/problems.index'
+import { Route as ProblemsProblemIdRouteImport } from './routes/problems.$problemId'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const HistoryRoute = HistoryRouteImport.update({
+  id: '/history',
+  path: '/history',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AttemptsAttemptIdRoute = AttemptsAttemptIdRouteImport.update({
+  id: '/attempts/$attemptId',
+  path: '/attempts/$attemptId',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PracticeAttemptIdRoute = PracticeAttemptIdRouteImport.update({
+  id: '/practice/$attemptId',
+  path: '/practice/$attemptId',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProblemsIndexRoute = ProblemsIndexRouteImport.update({
+  id: '/problems/',
+  path: '/problems/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProblemsProblemIdRoute = ProblemsProblemIdRouteImport.update({
+  id: '/problems/$problemId',
+  path: '/problems/$problemId',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/history': typeof HistoryRoute
+  '/attempts/$attemptId': typeof AttemptsAttemptIdRoute
+  '/practice/$attemptId': typeof PracticeAttemptIdRoute
+  '/problems/$problemId': typeof ProblemsProblemIdRoute
+  '/problems/': typeof ProblemsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/history': typeof HistoryRoute
+  '/attempts/$attemptId': typeof AttemptsAttemptIdRoute
+  '/practice/$attemptId': typeof PracticeAttemptIdRoute
+  '/problems/$problemId': typeof ProblemsProblemIdRoute
+  '/problems': typeof ProblemsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/history': typeof HistoryRoute
+  '/attempts/$attemptId': typeof AttemptsAttemptIdRoute
+  '/practice/$attemptId': typeof PracticeAttemptIdRoute
+  '/problems/$problemId': typeof ProblemsProblemIdRoute
+  '/problems/': typeof ProblemsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/history'
+    | '/attempts/$attemptId'
+    | '/practice/$attemptId'
+    | '/problems/$problemId'
+    | '/problems/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/history'
+    | '/attempts/$attemptId'
+    | '/practice/$attemptId'
+    | '/problems/$problemId'
+    | '/problems'
+  id:
+    | '__root__'
+    | '/'
+    | '/history'
+    | '/attempts/$attemptId'
+    | '/practice/$attemptId'
+    | '/problems/$problemId'
+    | '/problems/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  HistoryRoute: typeof HistoryRoute
+  AttemptsAttemptIdRoute: typeof AttemptsAttemptIdRoute
+  PracticeAttemptIdRoute: typeof PracticeAttemptIdRoute
+  ProblemsProblemIdRoute: typeof ProblemsProblemIdRoute
+  ProblemsIndexRoute: typeof ProblemsIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +117,51 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/history': {
+      id: '/history'
+      path: '/history'
+      fullPath: '/history'
+      preLoaderRoute: typeof HistoryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/attempts/$attemptId': {
+      id: '/attempts/$attemptId'
+      path: '/attempts/$attemptId'
+      fullPath: '/attempts/$attemptId'
+      preLoaderRoute: typeof AttemptsAttemptIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/practice/$attemptId': {
+      id: '/practice/$attemptId'
+      path: '/practice/$attemptId'
+      fullPath: '/practice/$attemptId'
+      preLoaderRoute: typeof PracticeAttemptIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/problems/': {
+      id: '/problems/'
+      path: '/problems'
+      fullPath: '/problems/'
+      preLoaderRoute: typeof ProblemsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/problems/$problemId': {
+      id: '/problems/$problemId'
+      path: '/problems/$problemId'
+      fullPath: '/problems/$problemId'
+      preLoaderRoute: typeof ProblemsProblemIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  HistoryRoute: HistoryRoute,
+  AttemptsAttemptIdRoute: AttemptsAttemptIdRoute,
+  PracticeAttemptIdRoute: PracticeAttemptIdRoute,
+  ProblemsProblemIdRoute: ProblemsProblemIdRoute,
+  ProblemsIndexRoute: ProblemsIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
